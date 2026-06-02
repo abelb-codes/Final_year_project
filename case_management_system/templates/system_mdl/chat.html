@@ -1,0 +1,18 @@
+{% extends 'system_mdl/base.html' %}
+{% block content %}
+<section class="chat-container">
+    <div class="chat-header">
+        <div>
+            <h1>AI Academic Advisor</h1>
+            <p>Ask questions about Hawassa University policies, registration, exams, and support.</p>
+        </div>
+    </div>
+    <div id="chat-messages" class="chat-messages" aria-live="polite"></div>
+    <div class="chat-input-bar">
+        <textarea id="chat-input" placeholder="Type your question here..." rows="3"></textarea>
+        <button id="chat-send" class="primary-button">Send</button>
+    </div>
+    <div id="chat-status" class="chat-status"></div>
+</section>
+<script src="{% static 'system_mdl/js/chat.js' %}"></script>
+{% endblock %}

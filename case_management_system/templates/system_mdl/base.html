@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token }}">
+    <title>Hawassa University AI Assistant</title>
+    <link rel="stylesheet" href="{% static 'system_mdl/css/chat.css' %}">
+</head>
+<body>
+    <header class="app-header">
+        <div class="app-brand">Hawassa University AI Advisor</div>
+        <nav class="app-nav">
+            {% if user.is_authenticated %}
+            <a href="{% url 'chat_page' %}">Chat</a>
+            <a href="#" id="logout-link">Logout</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="app-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="app-footer">
+        <p>Trusted academic advisor powered by university policies and knowledge base data.</p>
+    </footer>
+</body>
+</html>

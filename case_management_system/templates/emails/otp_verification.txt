@@ -1,0 +1,2 @@
+Hello, this is from Hawassa University Case Management System.  
+Your verification code is: {otp}. It expires in {{ expiry_minutes }} minutes.

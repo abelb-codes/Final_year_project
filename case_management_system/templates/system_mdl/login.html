@@ -1,0 +1,56 @@
+{% extends 'system_mdl/base.html' %}
+{% block content %}
+<div class="auth-card">
+    <h1>Login</h1>
+    <p>Use your Hawassa University account to access the AI advisor.</p>
+    <div class="form-group">
+        <label for="username">Email or username</label>
+        <input id="username" type="text" autocomplete="username" placeholder="username or email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" autocomplete="current-password" placeholder="Password">
+    </div>
+    <button id="login-button" class="primary-button">Login</button>
+    <p class="form-note">If your account was created with OTP signup, use your email as the username.</p>
+    <div id="login-error" class="form-error"></div>
+</div>
+<script>
+const loginForm = document.getElementById('login-button');
+const errorNode = document.getElementById('login-error');
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}
+loginForm.addEventListener('click', async () => {
+    errorNode.textContent = '';
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value;
+    if (!username || !password) {
+        errorNode.textContent = 'Please enter both username and password.';
+        return;
+    }
+    const token = getCookie('csrftoken');
+    try {
+        const response = await fetch('/api/auth/login/', {
+            method: 'POST',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': token || '',
+            },
+            body: JSON.stringify({ username, password }),
+        });
+        const payload = await response.json();
+        if (!response.ok || payload.status !== 'success') {
+            errorNode.textContent = payload.message || 'Login failed.';
+            return;
+        }
+        window.location.href = '/chat/';
+    } catch (err) {
+        errorNode.textContent = 'Unable to contact the server. Try again later.';
+    }
+});
+</script>
+{% endblock %}
